@@ -2,7 +2,7 @@
 
 Business: Complete Service Solution
 Phone/WhatsApp: 9654357541
-Email: dksingh2012@gmail.com
+Email: css.serviceinfo@gmail.com
 Experience: Since 2015
 
 Core services:
