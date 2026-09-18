@@ -34,7 +34,7 @@ if(form){
       }
     }catch(error){
       if(status){
-        status.textContent="We could not send the enquiry right now. Please try again or contact us on WhatsApp: 9654357541.";
+        status.textContent="We could not send the enquiry right now. Please try again or contact us on WhatsApp: 8750755053.";
       }
     }finally{
       if(submit){ submit.disabled=false; submit.textContent="GET FREE QUOTE / ENQUIRY"; }
