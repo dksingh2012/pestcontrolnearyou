@@ -19,7 +19,7 @@ if(form){
     if(status) status.textContent="Sending your enquiry…";
 
     try{
-      const response=await fetch("https://formsubmit.co/ajax/css.serviceinfo@gmail.com",{
+      const response=await fetch("https://formsubmit.co/ajax/info.completepestsolution@gmail.com",{
         method:"POST",
         headers:{"Accept":"application/json"},
         body:new FormData(form)
