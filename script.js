@@ -28,6 +28,13 @@ if(form){
       if(!response.ok || result.success===false){
         throw new Error(result.message || "Unable to submit enquiry");
       }
+
+      if(typeof gtag==="function"){
+        gtag("event","generate_lead",{
+          page_location:location.pathname,
+          form_name:"enquiry-form"
+        });
+      }
       form.reset();
       if(status){
         status.textContent="Thank you! Your enquiry has been sent successfully. We will contact you shortly.";
@@ -41,3 +48,13 @@ if(form){
     }
   });
 }
+
+document.addEventListener("click", event=>{
+  const whatsappLink=event.target.closest('a[href*="wa.me/"]');
+  if(whatsappLink && typeof gtag==="function"){
+    gtag("event","whatsapp_click",{
+      page_location:location.pathname,
+      link_url:whatsappLink.href
+    });
+  }
+});
