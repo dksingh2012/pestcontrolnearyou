@@ -9,49 +9,16 @@ document.querySelectorAll("[data-enquiry]").forEach(btn=>{
     document.querySelector("#enquiry")?.scrollIntoView({behavior:"smooth"});
   });
 });
+// Enquiry form uses the browser's native POST to FormSubmit.
+// This avoids cross-origin AJAX/CORS "Failed to fetch" errors and keeps
+// submission online without opening the visitor's email application.
 const form=document.querySelector("#enquiry-form");
 if(form){
-  const status=document.querySelector("#form-status");
-  form.addEventListener("submit",async e=>{
-    e.preventDefault();
+  form.addEventListener("submit",()=>{
     const submit=form.querySelector('button[type="submit"]');
-    if(submit) { submit.disabled=true; submit.textContent="SENDING…"; }
-    if(status) status.textContent="Sending your enquiry…";
-
-    try{
-      const formData=new FormData(form);
-      const payload=Object.fromEntries(formData.entries());
-      const response=await fetch("https://formsubmit.co/ajax/info.completepestsolution@gmail.com",{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "Accept":"application/json"
-        },
-        body:JSON.stringify(payload)
-      });
-      const result=await response.json();
-      if(!response.ok || String(result.success).toLowerCase()!=="true"){
-        throw new Error(result.message || "Form service did not confirm receipt.");
-      }
-
-      if(typeof gtag==="function"){
-        gtag("event","generate_lead",{
-          page_location:location.pathname,
-          form_name:"enquiry-form"
-        });
-      }
-      form.reset();
-      if(status){
-        status.textContent="Thank you! Your enquiry has been sent successfully. We will contact you shortly.";
-      }
-    }catch(error){
-      console.error("Enquiry submission failed:",error);
-      if(status){
-        status.textContent=(error && error.message ? error.message : "We could not confirm your enquiry.")+" Please try again or contact us on WhatsApp: 8750755053.";
-      }
-    }finally{
-      if(submit){ submit.disabled=false; submit.textContent="GET FREE QUOTE / ENQUIRY"; }
-    }
+    if(submit){ submit.disabled=true; submit.textContent="SENDING…"; }
+    const status=document.querySelector("#form-status");
+    if(status) status.textContent="Submitting your enquiry securely…";
   });
 }
 
