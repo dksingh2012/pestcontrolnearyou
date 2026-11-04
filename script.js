@@ -19,14 +19,19 @@ if(form){
     if(status) status.textContent="Sending your enquiry…";
 
     try{
+      const formData=new FormData(form);
+      const payload=Object.fromEntries(formData.entries());
       const response=await fetch("https://formsubmit.co/ajax/info.completepestsolution@gmail.com",{
         method:"POST",
-        headers:{"Accept":"application/json"},
-        body:new FormData(form)
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json"
+        },
+        body:JSON.stringify(payload)
       });
       const result=await response.json();
-      if(!response.ok || result.success===false){
-        throw new Error(result.message || "Unable to submit enquiry");
+      if(!response.ok || String(result.success).toLowerCase()!=="true"){
+        throw new Error(result.message || "Form service did not confirm receipt.");
       }
 
       if(typeof gtag==="function"){
@@ -40,8 +45,9 @@ if(form){
         status.textContent="Thank you! Your enquiry has been sent successfully. We will contact you shortly.";
       }
     }catch(error){
+      console.error("Enquiry submission failed:",error);
       if(status){
-        status.textContent="We could not send the enquiry right now. Please try again or contact us on WhatsApp: 8750755053.";
+        status.textContent=(error && error.message ? error.message : "We could not confirm your enquiry.")+" Please try again or contact us on WhatsApp: 8750755053.";
       }
     }finally{
       if(submit){ submit.disabled=false; submit.textContent="GET FREE QUOTE / ENQUIRY"; }
