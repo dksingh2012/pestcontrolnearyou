@@ -9,9 +9,8 @@ document.querySelectorAll("[data-enquiry]").forEach(btn=>{
     document.querySelector("#enquiry")?.scrollIntoView({behavior:"smooth"});
   });
 });
-// Enquiry form uses the browser's native POST to FormSubmit.
-// This avoids cross-origin AJAX/CORS "Failed to fetch" errors and keeps
-// submission online without opening the visitor's email application.
+// Enquiry form uses a standard HTML POST to Formspree.
+// This avoids custom cross-origin AJAX code and keeps submission online.
 const form=document.querySelector("#enquiry-form");
 if(form){
   form.addEventListener("submit",()=>{
