@@ -1,3 +1,9 @@
+// Load GA4 on service and city landing pages as well as the homepage.
+// The homepage already configures GA4 in its head, so avoid a duplicate page_view there.
+if (location.pathname !== "/" && typeof gtag === "function") {
+  gtag("config", "G-6XMVJYRND6");
+}
+
 
 document.querySelectorAll("[data-enquiry]").forEach(btn=>{
   btn.addEventListener("click",()=>{
@@ -27,6 +33,16 @@ document.addEventListener("click", event=>{
     gtag("event","whatsapp_click",{
       page_location:location.pathname,
       link_url:whatsappLink.href
+    });
+  }
+});
+
+document.addEventListener("click", event=>{
+  const phoneLink=event.target.closest('a[href^="tel:"]');
+  if(phoneLink && typeof gtag==="function"){
+    gtag("event","phone_click",{
+      page_location:location.pathname,
+      link_url:phoneLink.href
     });
   }
 });
