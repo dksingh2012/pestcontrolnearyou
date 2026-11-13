@@ -28,13 +28,29 @@ p{margin:8px 0 24px;color:#555}
 <h1>Complete Pest Solution</h1>
 <p>Call us directly for pest control service.</p>
 <div class="phone">8750755053</div>
-<a class="call" href="tel:+918750755053" onclick="if(typeof gtag==='function'){gtag('event','call_click',{call_page:location.pathname});}">📞 Call Now</a>
+<a class="call" href="tel:+918750755053" onclick="return gtag_report_conversion('tel:+918750755053');">📞 Call Now</a>
 </main>
 <script>
-setTimeout(function(){
-  if(typeof gtag==='function'){gtag('event','call_click',{call_page:location.pathname});}
-  window.location.href="tel:+918750755053";
-},200);
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof url !== 'undefined') window.location = url;
+  };
+  if (typeof gtag === 'function') {
+    gtag('event', 'conversion', {
+      send_to: 'AW-18469713699/mLmWCIDWxbcdEKPuhedE',
+      value: 1.0,
+      currency: 'INR',
+      event_callback: callback
+    });
+    // Fallback preserves direct dial if the tag callback is blocked.
+    window.setTimeout(function () {
+      if (typeof url !== 'undefined') window.location = url;
+    }, 1200);
+  } else if (typeof url !== 'undefined') {
+    window.location = url;
+  }
+  return false;
+}
 </script>
 </body>
 </html>
