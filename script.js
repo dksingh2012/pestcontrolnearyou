@@ -98,6 +98,13 @@ if (form) {
 document.addEventListener("click", event => {
   const whatsappLink = event.target.closest('a[href*="wa.me/"]');
   if (whatsappLink && typeof gtag === "function") {
+    // Google Ads WhatsApp-click conversion. Google Ads attributes eligible ad clicks.
+    gtag("event", "conversion", {
+      send_to: "AW-18469713699/Ol7ACLazx7cdEKPuhedE",
+      value: 1.0,
+      currency: "INR"
+    });
+    // Keep the GA4 interaction event for reporting.
     gtag("event", "whatsapp_click", {
       page_location: location.pathname,
       link_url: whatsappLink.href
